@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SwiperCore, {
   Autoplay,
   EffectFade,
@@ -6,14 +6,27 @@ import SwiperCore, {
   Pagination,
 } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { fatchData } from "../utilits";
+import DataContext from "../dataContext";
 SwiperCore.use([Pagination, Navigation, EffectFade, Autoplay]);
 
 const Testimonial = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
+
+  const userData = useContext(DataContext);
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
   useEffect(async () => {
-    setData(await fatchData("/static/testimonial.json"));
-  }, []);
+    if(userData){
+      setData({
+        testimonials: userData.user.testimonials,
+        subtitle: userData.user.about.subTitle
+      })
+    }
+  }, [userData]);
+
   const props = {
     slidesPerView: 1,
     loop: true,
@@ -22,7 +35,7 @@ const Testimonial = () => {
       clickable: true,
     },
   };
-
+  
   return (
     <div className="dizme_tm_section">
       <div className="dizme_tm_testimonials">
@@ -30,8 +43,7 @@ const Testimonial = () => {
           <span>Testimonials</span>
           <h3>What My Clients Say</h3>
           <p>
-            Most common methods for designing websites that work well on desktop
-            is responsive and adaptive design
+            {data.subtitle}
           </p>
         </div>
         <div className="list_wrapper">
@@ -39,39 +51,23 @@ const Testimonial = () => {
             <div className="in">
               <Swiper {...props} className="">
                 {data &&
-                  data.map((data, i) => (
+                  data.testimonials &&
+                  data.testimonials.map((data, i) => (
                     <SwiperSlide key={i}>
                       <div className="icon">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlnsXlink="http://www.w3.org/1999/xlink"
-                          version="1.1"
-                          id="Layer_1"
-                          x="0px"
-                          y="0px"
-                          width="200px"
-                          height="200px"
-                          viewBox="796 698 200 200"
-                          enableBackground="new 796 698 200 200"
-                          xmlSpace="preserve"
-                          className="svg replaced-svg"
-                        >
-                          <g>
-                            <path d="M885.208,749.739v-40.948C836.019,708.791,796,748.81,796,798v89.209h89.208V798h-48.26   C836.948,771.39,858.598,749.739,885.208,749.739z" />
-                            <path d="M996,749.739v-40.948c-49.19,0-89.209,40.019-89.209,89.209v89.209H996V798h-48.26   C947.74,771.39,969.39,749.739,996,749.739z" />
-                          </g>
-                        </svg>
+                        
+                        <img src={data.image.url} />
                       </div>
                       <div className="text">
-                        <p>{data.details}</p>
+                        <p>{data.review}</p>
                       </div>
                       <div className="short">
                         <div className="image">
-                          <div className="main" data-img-url={data.img} />
+                          <div className="main" data-img-url={data.image.url} />
                         </div>
                         <div className="detail">
                           <h3>{data.name}</h3>
-                          <span>{data.profession}</span>
+                          <span>{data.position}</span>
                         </div>
                       </div>
                     </SwiperSlide>
