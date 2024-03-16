@@ -1,14 +1,28 @@
-import parse from "html-react-parser";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fatchData } from "../utilits";
 import ServicePopup from "./popup/ServicePopup";
+import DataContext from "../dataContext";
 
 const Service = ({ dark }) => {
-  const [data, setData] = useState([]);
   const [popupdata, setPopupdata] = useState({});
   const [popup, setPopup] = useState(false);
+  const [data, setData] = useState({});
+  const [staticData, setStaticData] = useState([]);
+
+  const userData = useContext(DataContext);
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
   useEffect(async () => {
-    setData(await fatchData("/static/service.json"));
+    setStaticData(await fatchData("/static/service.json"));
+    if(userData){
+      setData({
+        subTitle: userData.user.about.subTitle,
+        services: userData.user.services
+      })
+    }
     setTimeout(() => {
       let VanillaTilt = require("vanilla-tilt");
       VanillaTilt.init(document.querySelectorAll(".tilt-effect"), {
@@ -18,7 +32,7 @@ const Service = ({ dark }) => {
         transition: true,
       });
     }, 1000);
-  }, []);
+  }, [userData]);
 
   const onClick = (index) => {
     setPopup(true);
@@ -38,14 +52,14 @@ const Service = ({ dark }) => {
             <span>Services</span>
             <h3>What I Do for Clients</h3>
             <p>
-              Most common methods for designing websites that work well on
-              desktop is responsive and adaptive design
+              {data && data.subTitle}
             </p>
           </div>
           <div className="service_list">
             <ul>
               {data &&
-                data.map(
+                data.services &&
+                data.services.map(
                   (data, i) =>
                     data && (
                       <li
@@ -58,29 +72,31 @@ const Service = ({ dark }) => {
                       >
                         <div className="list_inner tilt-effect">
                           <span className="icon">
-                            {parse(data.icon.svg)}
-                            {dark ? (
-                              <img
-                                className="back"
-                                src={data.icon.iconBgDark}
-                                alt="image"
-                              />
-                            ) : (
-                              <img
-                                className="back"
-                                src={data.icon.iconBg}
-                                alt="image"
-                              />
-                            )}
+                            <div className="parent-container">
+                              <img className="service-image" src={data.image.url} />
+                              {dark ? (
+                                <img
+                                  className="back"
+                                  src={staticData[i % 4].icon.iconBgDark}
+                                  alt="image"
+                                />
+                              ) : (
+                                <img
+                                  className="back"
+                                  src={staticData[i % 4].icon.iconBg}
+                                  alt="image"
+                                />
+                              )}
+                            </div>
                           </span>
                           <div className="title">
-                            <h3>{data.title}</h3>
+                            <h3>{data.name}</h3>
                             <span className="price">
-                              Starts from <span>${data.price}</span>
+                              Starts from <span>{data.charge}</span>
                             </span>
                           </div>
                           <div className="text">
-                            <p>{data.shortDec}</p>
+                            <p>{data.desc}</p>
                           </div>
                           <a className="dizme_tm_full_link" href="#" />
                           <img
