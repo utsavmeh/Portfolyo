@@ -1,21 +1,27 @@
-import parse from "html-react-parser";
-import { useEffect, useState } from "react";
-import { fatchData } from "../utilits";
+import { useEffect, useState, useContext } from "react";
+import DataContext from "../dataContext";
 
 const Home = ({ dark }) => {
+  const userData = useContext(DataContext);
   const [data, setData] = useState({});
-  useEffect(async () => {
-    setData(await fatchData("/static/info.json"));
-  }, []);
 
-  // name => user/about/name
-  // skills[] => user/skills
-  // avatar{} => user/about/avatar
-  // social[] => user/social_handles
-  // bio => user/about/subTitle
-  // address => user/about/address
-  // mainSkill => user/about/title
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
+  useEffect(() => {
+    if(userData){
+      setData({
+        name: userData.user.about.name,
+        skills: userData.user.skills,
+        img: userData.user.about.avatar.url,
+        social: userData.user.social_handles,
+        bio: userData.user.about.subTitle,
+        address: userData.user.about.address,
+        mainSkill: userData.user.about.title
+      })
+    }
+  }, [userData])
 
   return (
     <div className="dizme_tm_section" id="home">
@@ -53,10 +59,10 @@ const Home = ({ dark }) => {
                   <ul>
                     {data &&
                       data.social &&
-                      data.social.map((social, i) => (
+                      data.social.map((social, i) =>(
                         <li key={i}>
-                          <a href="#">
-                            <i className={social.icon} />
+                          <a href={social.url}>
+                            <img src={social.image.url} />
                           </a>
                         </li>
                       ))}
@@ -70,18 +76,21 @@ const Home = ({ dark }) => {
                   src={data && data.img ? data.img : "/img/slider/avatar.png"}
                   alt="image"
                 />
-                {data &&
+                {
+                data &&
                   data.skills &&
                   data.skills.map(
                     (skill, i) =>
-                      skill.icon && (
+                      {
+                        if(i < 3){ // Can support upto 8 skills
+                        return(
                         <span
                           key={i}
-                          className={`skills ${skill.name} anim_moveBottom`}
+                          className={`skills skill${i} anim_moveBottom`}
                         >
-                          {parse(skill.icon)}
+                          <img src={skill.image.url} />
                         </span>
-                      )
+                      )}}
                   )}
               </div>
             </div>

@@ -632,7 +632,7 @@ h6 {
   list-style-type: none;
 }
 .dizme_tm_hero .social ul li {
-  margin: 0px 5px 0px 0px;
+  margin: 0px 8px 0px 0px;
   display: inline-block;
 }
 .dizme_tm_hero .social ul li:last-child {
@@ -641,6 +641,10 @@ h6 {
 .dizme_tm_hero .social ul li a {
   text-decoration: none;
   color: #000;
+}
+.dizme_tm_hero .social ul li a img{
+  width: 20px;
+  height: 20px;
 }
 .dizme_tm_hero .image {
   position: relative;
@@ -660,7 +664,7 @@ h6 {
   position: absolute;
   box-shadow: 24px 0px 72px rgba(54, 32, 152, 0.3);
 }
-.dizme_tm_hero .skills.illustrator {
+/* .dizme_tm_hero .skills.illustrator {
   background-color: #390000;
   top: 20px;
   left: -30px;
@@ -674,7 +678,48 @@ h6 {
   background-color: #fff;
   bottom: 60px;
   left: 140px;
+} */
+.dizme_tm_hero .skills.skill0 {
+  background-color: #001631;
+  top: 20px;
+  left: -30px;
 }
+.dizme_tm_hero .skills.skill7 {
+  background-color: #fff;
+  right: 70px;
+  top: 80px;
+}
+.dizme_tm_hero .skills.skill1 {
+  background-color: #fff;
+  bottom: 30px;
+  left: 170px;;
+}
+.dizme_tm_hero .skills.skill4 {
+  background-color: #390000;
+  top: 220px;
+  left: -30px;
+}
+.dizme_tm_hero .skills.skill2 {
+  background-color: #001631;
+  right: 275px;
+  top: -80px;
+}
+.dizme_tm_hero .skills.skill6 {
+  background-color: #390000;
+  top: 220px;
+  left: 260px;
+}
+.dizme_tm_hero .skills.skill5 {
+  background-color: #fff;
+  left: 10px;
+  bottom: 0px;
+}
+.dizme_tm_hero .skills.skill6 {
+  background-color: #fff;
+  bottom: 0;
+  left: 230px;
+}
+
 .dizme_tm_hero .skills .svg {
   position: absolute;
   top: 50%;
@@ -1623,7 +1668,7 @@ h6 {
   width: 95px;
   height: 95px;
 }
-.dizme_tm_services .service_list .icon .svg {
+.dizme_tm_services .service_list .icon .service-image {
   width: 45px;
   height: 45px;
   top: 50%;
@@ -1783,6 +1828,7 @@ h6 {
   height: 65px;
   color: #f75023;
 }
+
 .dizme_tm_testimonials .text {
   margin-bottom: 51px;
 }

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Fragment } from "react";
 import "../styles/globals.css";
+import { DataProvider } from "../src/dataContext";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <Component {...pageProps} />
+      <DataProvider>
+        <Component {...pageProps} />
+      </DataProvider>
     </Fragment>
   );
 }
