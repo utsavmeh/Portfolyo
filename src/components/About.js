@@ -2,12 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import Counter from "./Counter";
 import DataContext from "../dataContext";
 
-//experience <Counter end={18} />                         => user/about/exp_year
-//projects_count <Counter end={9} />K                     => user/projects.count
-//<span>{`I'm a Designer`}</span>                         => I'm a {user/about/title}
-//<h3>I Can Design Anything You Want</h3>                 => user/about/subtitle
-// <div className="text wow fadeInUp"                     => user/about/description
-
 const About = ({ dark }) => {
   const userData = useContext(DataContext);
   const [data, setData] = useState({});
