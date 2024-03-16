@@ -1,5 +1,33 @@
+import { useContext, useEffect, useState } from "react";
 import Counter from "./Counter";
+import DataContext from "../dataContext";
+
+//experience <Counter end={18} />                         => user/about/exp_year
+//projects_count <Counter end={9} />K                     => user/projects.count
+//<span>{`I'm a Designer`}</span>                         => I'm a {user/about/title}
+//<h3>I Can Design Anything You Want</h3>                 => user/about/subtitle
+// <div className="text wow fadeInUp"                     => user/about/description
+
 const About = ({ dark }) => {
+  const userData = useContext(DataContext);
+  const [data, setData] = useState({});
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  useEffect(() => {
+    if(userData){
+      setData({
+        exp_year: userData.user.about.exp_year,
+        projects: userData.user.projects,
+        title: userData.user.about.title,
+        subtitle: userData.user.about.subtitle,
+        description: userData.user.about.description,
+      })
+    }
+  }, [userData])
+
   return (
     <div className="dizme_tm_section" id="about">
       <div className="dizme_tm_about">
@@ -11,7 +39,7 @@ const About = ({ dark }) => {
                 <div className="numbers year">
                   <div className="wrapper">
                     <h3>
-                      <Counter end={18} />
+                      {data && <Counter end={data.exp_year} />}
                     </h3>
                     <span className="name">
                       Years of
@@ -23,7 +51,7 @@ const About = ({ dark }) => {
                 <div className="numbers project">
                   <div className="wrapper">
                     <h3>
-                      <Counter end={9} />K
+                      {data && data.projects && <Counter end={data.projects.length} />}
                     </h3>
                     <span className="name">
                       Total
@@ -36,17 +64,12 @@ const About = ({ dark }) => {
             </div>
             <div className="right">
               <div className="title wow fadeInUp" data-wow-duration="1s">
-                <span>{`I'm a Designer`}</span>
-                <h3>I Can Design Anything You Want</h3>
+                <span>{`I'm a ${data.title}`}</span>
+                <h3>{data.subtitle}</h3>
               </div>
               <div className="text wow fadeInUp" data-wow-duration="1s">
                 <p>
-                  {`Hello there! I'm a web designer, and I'm very passionate and
-                  dedicated to my work. With 20 years experience as a
-                  professional web developer, I have acquired the skills and
-                  knowledge necessary to make your project a success. I enjoy
-                  every step of the design process, from discussion and
-                  collaboration.`}
+                  {`Hello there! ${data.description}`}
                 </p>
               </div>
               <div
