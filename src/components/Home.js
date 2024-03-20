@@ -61,7 +61,7 @@ const Home = ({ dark }) => {
                       data.social &&
                       data.social.map((social, i) =>(
                         <li key={i}>
-                          <a href={social.url}>
+                          <a target="_blank" href={social.url}>
                             <img src={social.image.url} />
                           </a>
                         </li>

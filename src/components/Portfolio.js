@@ -1,13 +1,24 @@
 import Isotope from "isotope-layout";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { dataImage, portfolioHover } from "../utilits";
 import DetailsPopup from "./popup/DetailsPopup";
+import DataContext from "../dataContext";
 
 const Portfolio = () => {
+
+  const [data, setData] = useState({});
+  const userData = useContext(DataContext);
+
   useEffect(() => {
+    if(userData){
+      setData({
+        subtitle: userData.user.about.subTitle,
+        project: userData.user.projects
+      })
+    }
     dataImage();
     portfolioHover();
-  }, []);
+  }, [userData]);
 
   // Isotope
   const isotope = useRef();
@@ -54,8 +65,7 @@ const Portfolio = () => {
             <span>Portfolio</span>
             <h3>My Amazing Works</h3>
             <p>
-              Most common methods for designing websites that work well on
-              desktop is responsive and adaptive design
+              {data && data.subtitle}
             </p>
           </div>
           <div className="portfolio_filter">
@@ -113,6 +123,31 @@ const Portfolio = () => {
           <div className="dizme_tm_portfolio_titles" />
           <div className="portfolio_list wow fadeInUp" data-wow-duration="1s">
             <ul className="gallery_zoom grid">
+              {data && data.project &&
+              data.project.map((data, i) => (
+                <li className="youtube grid-item">
+                  <div className="inner">
+                    <div
+                      className="entry dizme_tm_portfolio_animation_wrap"
+                      data-title="Mockup Shape"
+                      data-category="Youtube"
+                    >
+                      <a
+                        className="popup-youtube"
+                        href="https://www.youtube.com/embed/7e90gBu4pas?autoplay=1"
+                      >
+                        <img src="img/thumbs/42-56.jpg" alt="image" />
+                        <div
+                          className="main"
+                          data-img-url="img/portfolio/1.jpg"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            {/* <ul className="gallery_zoom grid">
               <li className="youtube grid-item">
                 <div className="inner">
                   <div
@@ -249,7 +284,7 @@ const Portfolio = () => {
                   </div>
                 </div>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
         <div className="brush_1 wow zoomIn" data-wow-duration="1s">
