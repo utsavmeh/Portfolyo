@@ -11,9 +11,6 @@ const Service = ({ dark }) => {
 
   const userData = useContext(DataContext);
 
-  if (!data) {
-    return <div>Loading...</div>;
-  }
 
   useEffect(async () => {
     setStaticData(await fatchData("/static/service.json"));
@@ -38,6 +35,10 @@ const Service = ({ dark }) => {
     setPopup(true);
     setPopupdata(data && data[index]);
   };
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="dizme_tm_section" id="service">

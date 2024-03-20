@@ -14,10 +14,6 @@ const Testimonial = () => {
 
   const userData = useContext(DataContext);
 
-  if (!data) {
-    return <div>Loading...</div>;
-  }
-
   useEffect(async () => {
     if(userData){
       setData({
@@ -25,7 +21,11 @@ const Testimonial = () => {
         subtitle: userData.user.about.subTitle
       })
     }
-  }, [userData]);
+}, [userData]);
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
   const props = {
     slidesPerView: 1,

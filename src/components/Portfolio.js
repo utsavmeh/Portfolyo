@@ -56,6 +56,10 @@ const Portfolio = () => {
   // Popup
   const [popup, setPopup] = useState(false);
 
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="dizme_tm_section" id="portfolio">
       <DetailsPopup open={popup} close={() => setPopup(false)} />
@@ -86,7 +90,7 @@ const Portfolio = () => {
             <ul className="gallery_zoom grid">
               {data && data.project &&
               data.project.map((data, i) => (
-                <li className="youtube grid-item">
+                <li key={i} className="youtube grid-item">
                   <div className="inner">
                     <div
                       className="entry dizme_tm_portfolio_animation_wrap"

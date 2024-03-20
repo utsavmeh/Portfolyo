@@ -5,23 +5,23 @@ const Home = ({ dark }) => {
   const userData = useContext(DataContext);
   const [data, setData] = useState({});
 
+  useEffect(() => {
+    if(userData){
+    setData({
+      name: userData.user.about.name,
+      skills: userData.user.skills,
+      img: userData.user.about.avatar.url,
+      social: userData.user.social_handles,
+      bio: userData.user.about.subTitle,
+      address: userData.user.about.address,
+      mainSkill: userData.user.about.title
+    })
+    }
+}, [userData])
+
   if (!data) {
     return <div>Loading...</div>;
   }
-
-  useEffect(() => {
-    if(userData){
-      setData({
-        name: userData.user.about.name,
-        skills: userData.user.skills,
-        img: userData.user.about.avatar.url,
-        social: userData.user.social_handles,
-        bio: userData.user.about.subTitle,
-        address: userData.user.about.address,
-        mainSkill: userData.user.about.title
-      })
-    }
-  }, [userData])
 
   return (
     <div className="dizme_tm_section" id="home">
@@ -61,7 +61,7 @@ const Home = ({ dark }) => {
                       data.social &&
                       data.social.map((social, i) =>(
                         <li key={i}>
-                          <a target="_blank" href={social.url}>
+                          <a target="_blank" rel="noreferrer" href={social.url}>
                             <img src={social.image.url} />
                           </a>
                         </li>

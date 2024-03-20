@@ -6,21 +6,21 @@ const About = ({ dark }) => {
   const userData = useContext(DataContext);
   const [data, setData] = useState({});
 
+  useEffect(() => {
+    if(userData){
+    setData({
+      exp_year: userData.user.about.exp_year,
+      projects: userData.user.projects,
+      title: userData.user.about.title,
+      subtitle: userData.user.about.subtitle,
+      description: userData.user.about.description,
+    })
+    }
+}, [userData])
+
   if (!data) {
     return <div>Loading...</div>;
   }
-
-  useEffect(() => {
-    if(userData){
-      setData({
-        exp_year: userData.user.about.exp_year,
-        projects: userData.user.projects,
-        title: userData.user.about.title,
-        subtitle: userData.user.about.subtitle,
-        description: userData.user.about.description,
-      })
-    }
-  }, [userData])
 
   return (
     <div className="dizme_tm_section" id="about">
