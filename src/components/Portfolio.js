@@ -112,8 +112,8 @@ const Portfolio = () => {
                   {/* <div className="title">
                     <h3>TechStack</h3>
                   </div> */}
-                    {data.techStack.map((techstack) => 
-                    <div className="chip">
+                    {data.techStack.map((techstack, index) => 
+                    <div className="chip" key={index}>
                       <div className="chip-content">
                         {techstack}
                       </div>
