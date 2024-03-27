@@ -67,7 +67,7 @@ const Portfolio = () => {
         <div className="container">
           <div className="dizme_tm_main_title" data-align="center">
             <span>Portfolio</span>
-            <h3>My Amazing Works</h3>
+            <h3>Projects</h3>
             <p>
               {data && data.subtitle}
             </p>
@@ -109,6 +109,17 @@ const Portfolio = () => {
                       </a>
                     </div>
                   </div>
+                  {/* <div className="title">
+                    <h3>TechStack</h3>
+                  </div> */}
+                    {data.techStack.map((techstack) => 
+                    <div className="chip">
+                      <div className="chip-content">
+                        {techstack}
+                      </div>
+                    </div>
+                    )}
+
                 </li>
               ))}
             </ul>
